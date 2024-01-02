@@ -18,40 +18,23 @@ int main(){
     return 0;
 }
 
-void stat(const double x[],int y,double z[]){
-    double sum = 0,avg;
-    for(int i=0;i<y;i++){
-        sum += x[i];
+void stat(const double A[],int N,double B[]){
+    B[0] = A[0];
+    B[1] = A[0]*A[0]; 
+    B[2] = A[0];
+    B[3] = 1/A[0];
+    B[4] = A[0];
+    B[5] = A[0];
+    for(int i = 1; i < N; i++){
+         B[0] += A[i];
+         B[1] += pow(A[i],2);
+         B[2] *= A[i];
+         B[3] += 1/A[i];
+         if(A[i] > B[4]) B[4]=A[i];
+         if(A[i] < B[5]) B[5]=A[i];
     }
-    avg = sum/y;
-    z[0] = avg;
-
-    double sum2 = 0,SD;
-    for(int i=0;i<y;i++){
-        sum2 += pow((x[i]),2);
-    }
-    SD = sqrt((sum2/y)-(pow((avg),2)));
-    z[1] = SD;
-
-    double sum3 = 1,GM;
-    for(int i=0;i<y;i++){
-        sum3 *= x[i];
-    }
-    GM = pow(sum3,1.0/y);
-    z[2] = GM;
-
-    double sum4=0,HM;
-    for(int i=0;i<y;i++){
-        sum4 += 1/x[i];
-    }
-    HM = y/sum4;
-    z[3] = HM;
-
-    double max = x[0],min = x[0];
-    for(int i=0;i<y;i++){
-        if(x[i]>max) max=x[i];
-        if(x[i]<min) min=x[i];
-    }
-    z[4] = max;
-    z[5] = min;
+    B[0] /= N;
+    B[1] = sqrt((B[1]/N)-(pow(B[0],2)));
+    B[2] = pow(B[2],1.0/N);
+    B[3] = N/B[3];
 }
